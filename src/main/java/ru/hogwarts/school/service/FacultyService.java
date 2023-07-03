@@ -23,7 +23,7 @@ public class FacultyService {
     }
 
     public Faculty updateFaculty(Faculty faculty) {
-        if (faculties.containsKey(idFaculty)) {
+        if (faculties.containsKey(faculty.getId())) {
             faculties.put(faculty.getId(), faculty);
             return faculty;
         }

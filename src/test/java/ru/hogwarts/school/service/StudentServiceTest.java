@@ -14,14 +14,16 @@ public class StudentServiceTest {
     @BeforeEach
     @Test
     public void createStudentTest() {
-        Student expected = new Student(1L, "name1", 20);
+        var expected = new Student(1L, "name1", 20);
         Student actualStudent = new Student(0L, "name1", 20);
         Assertions.assertEquals(expected, studentService.createStudent(actualStudent));
+//        Assertions.assertEquals(expected, studentService.createStudent(new Student(1L, "name1", 20)));
     }
 
     @Test
     public void readStudentTest() {
         Student expected = new Student(1L, "name1", 20);
+        Student student = new Student(0L, "name1", 20);
         Assertions.assertEquals(expected, studentService.readStudent(1));
     }
 
