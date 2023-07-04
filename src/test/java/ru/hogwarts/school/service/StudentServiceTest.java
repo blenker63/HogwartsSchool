@@ -11,25 +11,25 @@ import java.util.*;
 public class StudentServiceTest {
     private final StudentService studentService = new StudentService();
 
-    @BeforeEach
     @Test
     public void createStudentTest() {
         var expected = new Student(1L, "name1", 20);
         Student actualStudent = new Student(0L, "name1", 20);
         Assertions.assertEquals(expected, studentService.createStudent(actualStudent));
-//        Assertions.assertEquals(expected, studentService.createStudent(new Student(1L, "name1", 20)));
     }
 
     @Test
     public void readStudentTest() {
         Student expected = new Student(1L, "name1", 20);
-        Student student = new Student(0L, "name1", 20);
+        studentService.createStudent(new Student(1L, "name1", 20));
         Assertions.assertEquals(expected, studentService.readStudent(1));
     }
+
 
     @Test
     public void updateStudentTest() {
         Student expected = new Student(1L, "name11", 22);
+        studentService.createStudent(new Student(1L, "name1", 20));
         Student actualStudent = new Student(1L, "name11", 22);
         Assertions.assertEquals(expected, studentService.updateStudent(actualStudent));
     }
@@ -44,11 +44,13 @@ public class StudentServiceTest {
     @Test
     public void deleteStudentTest() {
         Student expected = new Student(1L, "name1", 20);
+        studentService.createStudent(new Student(1L, "name1", 20));
         Assertions.assertEquals(expected, studentService.deleteStudent(1));
     }
 
     @Test
     public void redAllStudentTest() {
+        studentService.createStudent(new Student(1L, "name1", 20));
         studentService.createStudent(new Student(0L, "name2", 20));
         studentService.createStudent(new Student(0L, "name3", 23));
         studentService.createStudent(new Student(0L, "name4", 22));
@@ -59,4 +61,17 @@ public class StudentServiceTest {
         expected.put(4L, new Student(4L, "name4", 22));
         Assertions.assertIterableEquals(expected.values(), studentService.readAllStudent());
     }
+
+    @Test
+    public void ageFilterStudentTest() {
+        studentService.createStudent(new Student(0L, "name1", 20));
+        studentService.createStudent(new Student(0L, "name2", 20));
+        studentService.createStudent(new Student(0L, "name3", 23));
+        studentService.createStudent(new Student(0L, "name4", 22));
+        HashMap<Long, Student> expected = new HashMap<>();
+        expected.put(1L, new Student(1L, "name1", 20));
+        expected.put(2L, new Student(2L, "name2", 20));
+        Assertions.assertIterableEquals(expected.values(), studentService.ageFilterStudent(20));
+    }
+
 }
