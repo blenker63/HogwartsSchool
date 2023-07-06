@@ -1,46 +1,48 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-    private final HashMap<Long, Student> students = new HashMap<>();
-    private long idStudent = 0;
+
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Student createStudent(Student student) {
-        student.setId(++idStudent);
-        students.put(idStudent, student);
-        return student;
+
+        return studentRepository.save(student);
     }
 
     public Student readStudent(long idStudent) {
-        return students.get(idStudent);
+        return studentRepository.getById(idStudent);
     }
 
     public Student updateStudent(Student student) {
-        if (students.containsKey(student.getId())) {
-            students.put(student.getId(), student);
-            return student;
-        }
-        return null;
+        return studentRepository.save(student);
     }
 
-    public Student deleteStudent(long idStudent) {
-        return students.remove(idStudent);
+    public void deleteStudent(long idStudent) {
+        studentRepository.deleteById(idStudent);
     }
 
     public Collection<Student> readAllStudent() {
-        return students.values();
+//        return students.values();
+        return studentRepository.findAll();
     }
 
-    public Collection ageFilterStudent(int age) {
-        return students.values().stream()
-                .filter(students -> students.getAge() == age)
-                .collect(Collectors.toList());
-    }
+//    public Collection ageFilterStudent(int age) {
+////        return students.values().stream()
+////                .filter(students -> students.getAge() == age)
+////                .collect(Collectors.toList());
+////        return studentRepository.;
+//        return List<Student> findByNameLike(int age);
+//    }
 }

@@ -11,7 +11,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("faculty")
 public class FacultyController {
-    private FacultyService facultyService;
+    private final FacultyService facultyService;
 
     public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;
@@ -41,8 +41,10 @@ public class FacultyController {
     }
 
     @DeleteMapping("{idFaculty}")
-    public Faculty deleteFaculty(@PathVariable long idFaculty) {
-        return facultyService.deleteFaculty(idFaculty);
+    public ResponseEntity deleteFaculty(@PathVariable long idFaculty) {
+//        return facultyService.deleteFaculty(idFaculty);
+        facultyService.deleteFaculty(idFaculty);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -50,9 +52,9 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.readAllFaculty());
     }
 
-    @GetMapping("{color}")
-    public ResponseEntity<Collection<Faculty>> colorFilterFaculty(@PathVariable String color) {
-        return ResponseEntity.ok(facultyService.colorFilterFaculty(color));
-    }
+//    @GetMapping("{color}")
+//    public ResponseEntity<Collection<Faculty>> colorFilterFaculty(@PathVariable String color) {
+//        return ResponseEntity.ok(facultyService.colorFilterFaculty(color));
+//    }
 
 }

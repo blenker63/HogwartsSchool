@@ -17,7 +17,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping
+    @PostMapping (consumes = {"application/xml","application/json"})
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
     }
@@ -41,8 +41,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{idStudent}")
-    public Student deleteStudent(@PathVariable long idStudent) {
-        return studentService.deleteStudent(idStudent);
+    public ResponseEntity deleteStudent(@PathVariable long idStudent) {
+        studentService.deleteStudent(idStudent);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
@@ -50,8 +51,8 @@ public class StudentController {
         return ResponseEntity.ok(studentService.readAllStudent());
     }
 
-    @GetMapping("{age}")
-    public ResponseEntity<Collection<Student>> ageFilterStudent(@PathVariable int age) {
-        return ResponseEntity.ok(studentService.ageFilterStudent(age));
-    }
+//    @GetMapping("{age}")
+//    public ResponseEntity<Collection<Student>> ageFilterStudent(@PathVariable int age) {
+//        return ResponseEntity.ok(studentService.ageFilterStudent(age));
+//    }
 }
