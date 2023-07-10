@@ -1,16 +1,54 @@
-//package ru.hogwarts.school.service;
+package ru.hogwarts.school.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-//import ru.hogwarts.school.model.Faculty;
-//import ru.hogwarts.school.model.Student;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.HashMap;
+import java.util.Optional;
 
-//public class FacultyServiceTest {
-//    private final FacultyService facultyService = new FacultyService();
-//
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+public class FacultyServiceTest {
+    @Mock
+    FacultyRepository facultyRepositoryMoc;
+    //    @InjectMocks
+    FacultyService facultyService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+        facultyService = new FacultyService(facultyRepositoryMoc);
+    }
+    @Test
+    public void updateFacultyTest() {
+when(facultyRepositoryMoc.findById(1L)).thenReturn(Optional.of(new Faculty(1L, "grif", "red")));
+    when(facultyRepositoryMoc.save(any())).then(invocation -> invocation.getArguments()[0]);
+    var updatedFaculty = facultyService.updateFaculty(new Faculty(1L, "name1", "green"));
+    assertThat(updatedFaculty.getColor()).isEqualTo(22);
+
+    var empty = facultyService.updateFaculty(new Faculty(10L, "empty", "green"));
+    assertThat(empty).isNull();
+}
+    @Test
+    public void deleteFacultyTest() {
+//        Faculty expected = new Faculty(1L, "name1", "orange");
+//        facultyService.createFaculty(new Faculty(1L, "name1", "orange"));
+//        Assertions.assertEquals(expected, facultyService.deleteFaculty(1));
+        facultyService.readFaculty(1);
+        verify(facultyRepositoryMoc, times(1)).deleteById(1L);
+    }
+
 ////    @BeforeEach
 //    @Test
 //    public void createFacultyTest() {
@@ -26,27 +64,6 @@ import java.util.HashMap;
 //        Assertions.assertEquals(expected, facultyService.readFaculty(1));
 //    }
 //
-//    @Test
-//    public void updateFacultyTest() {
-//        Faculty expected = new Faculty(1L, "name11", "blue");
-//        facultyService.createFaculty(new Faculty(1L, "name1", "orange"));
-//        Faculty actualFaculty = new Faculty(1L, "name11", "blue");
-//        Assertions.assertEquals(expected, facultyService.updateFaculty(actualFaculty));
-//    }
-//
-//    @Test
-//    public void updateFacultyNullTest() {
-//        Faculty expected = null;
-//        Faculty actualFaculty = new Faculty(3L, "name28", "red");
-//        Assertions.assertEquals(expected, facultyService.updateFaculty(actualFaculty));
-//    }
-//
-//    @Test
-//    public void deleteFacultyTest() {
-//        Faculty expected = new Faculty(1L, "name1", "orange");
-//        facultyService.createFaculty(new Faculty(1L, "name1", "orange"));
-//        Assertions.assertEquals(expected, facultyService.deleteFaculty(1));
-//    }
 //
 //    @Test
 //    public void redAllFacultyTest() {
@@ -73,4 +90,4 @@ import java.util.HashMap;
 //        expected.put(2L, new Faculty(2L, "name2", "orange"));
 //        Assertions.assertIterableEquals(expected.values(), facultyService.colorFilterFaculty("orange"));
 //    }
-//}
+}

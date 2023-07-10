@@ -47,9 +47,10 @@ private final FacultyRepository facultyRepository;
         return facultyRepository.findAll();
     }
 
-//    public Collection colorFilterFaculty(String color) {
+    public Faculty colorFilterFaculty(String color) {
 //        return faculties.values().stream()
 //                .filter(faculty -> faculty.getColor() == color)
 //                .collect(Collectors.toList());
-//    }
+        return facultyRepository.findByColor(color);
+    }
 }

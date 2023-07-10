@@ -38,11 +38,13 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-//    public Collection ageFilterStudent(int age) {
+    public Collection ageFilterStudent(int age) {
+        return studentRepository.findByAge(age);
 ////        return students.values().stream()
 ////                .filter(students -> students.getAge() == age)
 ////                .collect(Collectors.toList());
 ////        return studentRepository.;
 //        return List<Student> findByNameLike(int age);
-//    }
+    }
 }
+
