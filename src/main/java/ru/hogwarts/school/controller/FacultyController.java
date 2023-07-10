@@ -52,9 +52,15 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.readAllFaculty());
     }
 
-//    @GetMapping("{color}")
-//    public ResponseEntity<Collection<Faculty>> colorFilterFaculty(@PathVariable String color) {
-//        return ResponseEntity.ok(facultyService.colorFilterFaculty(color));
-//    }
+    @GetMapping("{color}")
+    public ResponseEntity<Collection<Faculty>> colorFilterFaculty(@PathVariable String color) {
+        return ResponseEntity.ok((Collection<Faculty>) facultyService.colorFilterFaculty(color));
+    }
+
+    @GetMapping("findByColorOrName")
+    public Collection<Faculty> findByColorOrName(@RequestParam(required = false) String color,
+                                                 @RequestParam(required = false) String name) {
+        return facultyService.findByColorOrName(color, name);
+    }
 
 }
