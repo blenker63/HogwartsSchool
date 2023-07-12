@@ -3,6 +3,9 @@ package ru.hogwarts.school.model;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Entity
 public class Faculty {
     @Id
@@ -25,11 +28,11 @@ private Collection<Student> student;
 
     }
 
-    public Long getIdFaculty() {
+    public Long getId() {
         return id;
     }
 
-    public void setIdFaculty(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
