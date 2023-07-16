@@ -77,7 +77,7 @@ public class StudentController {
     }
 
     @PostMapping(value = "/{idStudent}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadAvatar(@PathVariable Long idStudent,
+    public ResponseEntity<?> uploadAvatar(@PathVariable Long idStudent,
                                                @RequestParam MultipartFile avatar)
             throws IOException {
         if (avatar.getSize() >= 1024 * 300) {

@@ -1,12 +1,19 @@
 package ru.hogwarts.school.model;
 
+import java.util.Arrays;
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 
 import javax.persistence.*;
 
 @Entity
 public class Avatar {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String filePath;
     private Long fileSize;
@@ -15,6 +22,18 @@ public class Avatar {
     private byte[] preview;
     @OneToOne
     private Student student;
+
+    public Avatar() {
+    }
+    public Avatar(Long id, String filePath, Long fileSize, String mediaType, byte[] preview, Student student) {
+        this.id = id;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+        this.mediaType = mediaType;
+        this.preview = preview;
+        this.student = student;
+    }
+
 
     public Long getId() {
         return id;

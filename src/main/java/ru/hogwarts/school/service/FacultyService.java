@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class FacultyService {
@@ -35,6 +36,7 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
+//    public Collection<Faculty> colorFilterFaculty(String color) {
     public Faculty colorFilterFaculty(String color) {
         return facultyRepository.findByColor(color);
     }
