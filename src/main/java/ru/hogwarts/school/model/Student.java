@@ -16,7 +16,7 @@ public class Student {
 @JoinColumn(name =  "faculty_id")
     private Faculty faculty;
 
-@ManyToOne
+@OneToOne
 @JoinColumn(name =  "avatar_id")
     private Avatar avatar;
 

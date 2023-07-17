@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,9 +22,10 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public  Student readStudent(long idStudent) {
-//        return studentRepository.findById(idStudent);
-        return studentRepository.getById(idStudent);
+    public Student readStudent(long idStudent) {
+//    public Collection<Student> readStudent(Long idStudent) {
+        return studentRepository.findById(idStudent).get();
+//        return studentRepository.getById(idStudent);
     }
 
     public Student updateStudent(Student student) {
@@ -35,17 +37,11 @@ public class StudentService {
     }
 
     public Collection<Student> readAllStudent() {
-//        return students.values();
         return studentRepository.findAll();
     }
 
-    public Collection ageFilterStudent(int age) {
+    public Collection<Student> ageFilterStudent(int age) {
         return studentRepository.findByAge(age);
-////        return students.values().stream()
-////                .filter(students -> students.getAge() == age)
-////                .collect(Collectors.toList());
-////        return studentRepository.;
-//        return List<Student> findByNameLike(int age);
     }
 
     public Collection<Student> findByAgeBetween(int minAge, int maxAge) {

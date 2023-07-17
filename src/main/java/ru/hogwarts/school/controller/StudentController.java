@@ -24,9 +24,10 @@ import java.util.Collection;
 @RequestMapping("/student")
 public class StudentController {
     private final StudentService studentService;
-    private AvatarService avatarService;
+    private final AvatarService avatarService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService,
+                             AvatarService avatarService) {
         this.studentService = studentService;
         this.avatarService = avatarService;
 
@@ -37,13 +38,15 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
-    @GetMapping("{idStudent}")
+    @GetMapping("/id/{idStudent}")
     public ResponseEntity<Student> readStudent(@PathVariable long idStudent) {
+//    public Student readStudent(@PathVariable long idStudent) {
         Student student = studentService.readStudent(idStudent);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
+//    return studentService.readStudent(idStudent);
     }
 
     @PutMapping
@@ -77,7 +80,7 @@ public class StudentController {
     }
 
     @PostMapping(value = "/{idStudent}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> uploadAvatar(@PathVariable Long idStudent,
+    public ResponseEntity<?> uploadAvatar(@PathVariable long idStudent,
                                                @RequestParam MultipartFile avatar)
             throws IOException {
         if (avatar.getSize() >= 1024 * 300) {
@@ -87,8 +90,8 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/{id}/avatar/preview")
-    public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long idStudent) {
+    @GetMapping(value = "/id/{id}/avatar/preview")
+    public ResponseEntity<byte[]> downloadAvatar(@PathVariable long idStudent) {
         Avatar avatar = avatarService.findAvatar(idStudent);
 
         HttpHeaders headers = new HttpHeaders();
@@ -97,7 +100,7 @@ public class StudentController {
 
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getPreview());
     }
-    @GetMapping(value = "/{idStudent}/avatar")
+    @GetMapping(value = "/id/{idStudent}/avatar")
     public void downloadAvatar(@PathVariable Long idStudent, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.findAvatar(idStudent);
 

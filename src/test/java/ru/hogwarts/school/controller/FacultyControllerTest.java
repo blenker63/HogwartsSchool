@@ -29,7 +29,7 @@ public class FacultyControllerTest {
 
     @MockBean
     private FacultyRepository facultyRepository;
-    @MockBean
+//    @MockBean
     @SpyBean
     private FacultyService facultyService;
     @InjectMocks
