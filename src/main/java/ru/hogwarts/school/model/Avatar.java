@@ -1,5 +1,8 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
+
 import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -14,18 +17,21 @@ import javax.persistence.*;
 public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String filePath;
     private long fileSize;
     private String mediaType;
     @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] preview;
+    @JsonIgnore
     @OneToOne
+    @JoinColumn(name =  "student_id")
     private Student student;
 
     public Avatar() {
     }
-    public Avatar(Long id, String filePath, long fileSize, String mediaType, byte[] preview, Student student) {
+    public Avatar(long id, String filePath, long fileSize, String mediaType, byte[] preview, Student student) {
         this.id = id;
         this.filePath = filePath;
         this.fileSize = fileSize;
@@ -35,7 +41,7 @@ public class Avatar {
     }
 
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
