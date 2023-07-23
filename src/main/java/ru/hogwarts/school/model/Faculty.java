@@ -17,7 +17,7 @@ public class Faculty {
     private String color;
 
 @JsonIgnore
-@OneToMany(mappedBy = "faculty")
+@OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
 private Collection<Student> student;
 
     public Faculty(Long id, String name, String color) {
