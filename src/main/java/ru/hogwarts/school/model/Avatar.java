@@ -31,14 +31,14 @@ public class Avatar {
 
     public Avatar() {
     }
-    public Avatar(long id, String filePath, long fileSize, String mediaType, byte[] preview, Student student) {
-        this.id = id;
-        this.filePath = filePath;
-        this.fileSize = fileSize;
-        this.mediaType = mediaType;
-        this.preview = preview;
-        this.student = student;
-    }
+//    public Avatar(long id, String filePath, long fileSize, String mediaType, byte[] preview, Student student) {
+//        this.id = id;
+//        this.filePath = filePath;
+//        this.fileSize = fileSize;
+//        this.mediaType = mediaType;
+//        this.preview = preview;
+//        this.student = student;
+//    }
 
 
     public long getId() {
