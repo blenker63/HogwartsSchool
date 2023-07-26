@@ -1,16 +1,35 @@
 package ru.hogwarts.school.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private int age;
+@JsonIgnore
+@ManyToOne
+@JoinColumn(name =  "faculty_id")
+    private Faculty faculty;
+@JsonIgnore
+@OneToOne
+@JoinColumn(name =  "avatar_id")
+    private Avatar avatar;
 
     public Student(Long id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
+    }
+
+    public Student() {
+
     }
 
     public Long getId() {
