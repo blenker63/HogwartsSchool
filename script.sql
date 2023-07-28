@@ -15,3 +15,4 @@ where student.faculty_id = faculty.id
 select *
 from faculty, student
 where  faculty_id = 3;
+
