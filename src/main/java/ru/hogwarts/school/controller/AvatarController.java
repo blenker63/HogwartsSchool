@@ -34,7 +34,6 @@ public class AvatarController {
         try {
             avatarService.uploadAvatar(idStudent, file);
         } catch (IOException e) {
-//            logger.error("", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.status(200).build();
@@ -43,9 +42,6 @@ public class AvatarController {
     @GetMapping(value = "/id/{id}/avatar/preview")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable long idStudent) {
         Avatar avatar = avatarService.findAvatar(idStudent);
-//        if (avatar == null) {
-//            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//        }
         HttpHeaders headers = new HttpHeaders();
 
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
@@ -58,9 +54,6 @@ public class AvatarController {
     @GetMapping(value = "/file/{idStudent}/avatar")
     public void downloadAvatarFile(@PathVariable long idStudent, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.findAvatar(idStudent);
-//        if (avatar == null) {
-//            throw new IllegalStateException("Avatar not found");
-//        }
         try (var out = response.getOutputStream();
              var in = new FileInputStream(avatar.getFilePath())) {
             in.transferTo(out);

@@ -28,7 +28,6 @@ public class FacultyService {
     }
 
     public void deleteFaculty(long idFaculty) {
-//        return faculties.remove(idFaculty);
         facultyRepository.deleteById(idFaculty);
     }
 
@@ -36,7 +35,6 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
-//    public Collection<Faculty> colorFilterFaculty(String color) {
     public Faculty colorFilterFaculty(String color) {
         return facultyRepository.findByColor(color);
     }

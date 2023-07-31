@@ -30,7 +30,6 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 public class AvatarService {
 
-//    @Value("${avatar.dir.path}")
     private final String avatarsDir;
 
     private final StudentService studentService;
@@ -44,30 +43,6 @@ public class AvatarService {
         this.avatarsDir = avatarsDir;
         this.avatarRepository = avatarRepository;
     }
-
-//    public void uploadAvatar(long idStudent, MultipartFile file) throws IOException {
-//        Student student = studentService.readStudent(idStudent);
-//        if (student == null) {
-//            throw new StudentNotFoundException();
-//        }
-//        var ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
-//        var dir = Path.of(avatarsDir).toFile();
-//        if (!dir.exists()) {
-//            Files.createDirectory(Path.of(avatarsDir));
-//        }
-//        var path = avatarsDir + "/" + student.getId() + "." + file.getName() + "." + ext;
-//        try (var in = file.getInputStream();
-//             var out = new BufferedOutputStream(new FileOutputStream(path))) {
-//            in.transferTo(out);
-//        }
-//        Avatar avatar = findAvatar(idStudent);
-//        avatar.setPreview(file.getBytes());
-//        avatar.setFilePath(path);
-//        avatar.setFileSize(file.getSize());
-//        avatar.setMediaType(file.getContentType());
-//        avatar.setStudent(student);
-//        avatarRepository.save(avatar);
-//    }
 
     public void uploadAvatar(long idStudent, MultipartFile file) throws IOException {
         var student = studentService.readStudent(idStudent);
@@ -86,12 +61,10 @@ public class AvatarService {
             bis.transferTo(bos);
         }
         Avatar avatar = findAvatar(idStudent);
-//        Avatar avatar = new Avatar();
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(file.getSize());
         avatar.setMediaType(file.getContentType());
-//        avatar.setPreview(file.getBytes());
         avatar.setPreview(generateImagePreview(filePath));
         avatarRepository.save(avatar);
 
@@ -115,7 +88,6 @@ public class AvatarService {
         }
     }
     public Avatar findAvatar(Long idStudent) {
-//        return avatarRepository.findByStudentId(idStudent).orElseThrow();
         return avatarRepository.findByStudentId(idStudent).orElse(new Avatar());
     }
     public List<Avatar> getAvatarPage(int pageNumber, int pageSize) {
