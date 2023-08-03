@@ -52,7 +52,7 @@ public class FacultyService {
     public Integer number() {
         long start = System.currentTimeMillis();
        Integer sum = Stream.iterate(1, a -> a  + 1)
-               .parallel()
+               .parallel()                                   //последовательное выполнение - 22 мс, паралельное выполнение - 8мс
                 .limit(1_000_000)
                 .reduce(0, (a, b) -> (a + b));
         System.out.println(System.currentTimeMillis() - start);
