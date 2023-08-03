@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
@@ -41,5 +41,21 @@ public class FacultyService {
 
     public Collection<Faculty> findByColorOrName(String color, String name) {
         return facultyRepository.findAllByColorOrNameIgnoreCase(color, name);
+    }
+
+    public Optional<String> LongNameFaculty() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length));
+    }
+
+    public Integer number() {
+        long start = System.currentTimeMillis();
+       Integer sum = Stream.iterate(1, a -> a  + 1)
+               .parallel()
+                .limit(1_000_000)
+                .reduce(0, (a, b) -> (a + b));
+        System.out.println(System.currentTimeMillis() - start);
+        return sum;
     }
 }
