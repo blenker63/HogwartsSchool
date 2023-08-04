@@ -13,13 +13,15 @@ import java.util.stream.Collectors;
 public class StudentService {
     private final static Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
+    public final Object flag = new Object();
+
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     public Student createStudent(Student student) {
-logger.info("Invoked create student  method with argument {} ", student);
+        logger.info("Invoked create student  method with argument {} ", student);
         return studentRepository.save(student);
     }
 
@@ -50,7 +52,7 @@ logger.info("Invoked create student  method with argument {} ", student);
 
     public Collection<Student> findByAgeBetween(int minAge, int maxAge) {
         logger.info("Invoked findByAgeBetween student method with argument minAge {} and maxAge {}", minAge, maxAge);
-        return studentRepository.findByAgeBetween(minAge,  maxAge);
+        return studentRepository.findByAgeBetween(minAge, maxAge);
     }
 
     public long getStudentQuantity() {
@@ -92,5 +94,58 @@ logger.info("Invoked create student  method with argument {} ", student);
                 .orElse(0.0);
     }
 
+    public void printStudent() {
+        List<Student> students = studentRepository.findAll();
+        print(students.get(0));
+        print(students.get(1));
+
+        new Thread(() -> {
+            print(students.get(2));
+            print(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            print(students.get(4));
+            print(students.get(5));
+        }).start();
+    }
+
+    private void print(Student student) {
+        try {
+            Thread.sleep(3000);
+//            logger.info(student.toString());
+            System.out.println(student);
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void printStudentSynchronous() {
+        List<Student> students = studentRepository.findAll();
+        printSynchronous(students.get(0));
+        printSynchronous(students.get(1));
+
+        new Thread(() -> {
+            printSynchronous(students.get(2));
+            printSynchronous(students.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printSynchronous(students.get(4));
+            printSynchronous(students.get(5));
+        }).start();
+    }
+
+    private synchronized void printSynchronous(Student student) {
+        try {
+            Thread.sleep(3000);
+            System.out.println(student);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
 
